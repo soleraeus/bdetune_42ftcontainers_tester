@@ -76,12 +76,17 @@ int	main(int ac, char **av)
 
 		}
 		std::cout << "*******   Testing ConstClass<int> vector   *******" << std::endl;
-		for (int i = 0; i < 100; i++)
 		{
-			NAMESPACE::vector<ConstClass<int> >	test(100, ConstClass<int>(i -1));
+			NAMESPACE::vector<ConstClass<int> >	test;
 			NAMESPACE::vector<ConstClass<int> >::size_type	capacity;
-			NAMESPACE::vector<ConstClass<int> >::iterator	it = test.begin();
+			NAMESPACE::vector<ConstClass<int> >::iterator	it;
 
+			test.reserve(100);
+			for (int j = 0; j < 100; j++)
+			{
+				test.push_back(ConstClass<int>(j));
+			}
+			it = test.begin();
 			capacity = test.capacity();
 			std::cout << test.size() << std::endl;
 			*(test.begin()) = ConstClass<int>(-42);
@@ -92,6 +97,10 @@ int	main(int ac, char **av)
 			}
 			test.erase((test.begin() + 1), (test.begin() + 10));
 			std::cout << test.size() << std::endl;
+			for (NAMESPACE::vector<ConstClass<int> >::iterator start = it; start != test.end(); start++)
+			{
+				std::cout << *start << std::endl;
+			}
 			test.erase((test.end() - 1), test.end());
 			test.erase((test.begin(), test.begin()));
 			for (NAMESPACE::vector<ConstClass<int> >::iterator start = it; start != test.end(); start++)
